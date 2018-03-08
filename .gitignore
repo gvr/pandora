@@ -1,2 +1,8 @@
-*.class
-*.log
+# ignore hidden files ...
+.*
+
+# ... except the following
+!.gitignore
+
+# ignore work directories
+target/
