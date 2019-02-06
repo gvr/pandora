@@ -6,3 +6,4 @@
 
 # ignore work directories
 target/
+data/
