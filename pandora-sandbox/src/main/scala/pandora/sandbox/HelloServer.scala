@@ -15,6 +15,8 @@ import scala.concurrent.ExecutionContext
 
 object HelloServer extends App with SprayJsonSupport {
 
+  val startTime = System.currentTimeMillis()
+
   private val counter: AtomicInteger = new AtomicInteger(0)
 
   implicit val system: ActorSystem = ActorSystem()

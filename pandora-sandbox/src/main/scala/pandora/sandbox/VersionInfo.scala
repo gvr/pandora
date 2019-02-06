@@ -1,18 +1,16 @@
 package pandora.sandbox
 
-import pandora.sandbox.generated.BuildInfo
+import pandora.core.MetaData
 
 object VersionInfo {
 
-  private val startTime = System.currentTimeMillis()
-
   lazy val asMap: Map[String, String] = Map(
-    "name" -> BuildInfo.name,
-    "version" -> BuildInfo.version,
-    "branch" -> BuildInfo.gitBranchName.getOrElse("<none>"),
-    "commit" -> BuildInfo.gitCommitHash.getOrElse("<none>"),
-    "build-time" -> new java.util.Date(BuildInfo.buildTime).toString,
-    "start-time" -> new java.util.Date(startTime).toString
+    "name" -> MetaData.name,
+    "version" -> MetaData.version,
+    "git-branch" -> MetaData.gitBranchName.getOrElse("<none>"),
+    "git-commit" -> MetaData.gitCommitHash.getOrElse("<none>"),
+    "build-time" -> MetaData.buildTime,
+    "start-time" -> MetaData.startTime
   )
 
 }

@@ -19,7 +19,36 @@ inThisBuild(
   )
 )
 
+lazy val root = (project in file("."))
+  .settings(
+    name := "pandora"
+  )
+
+lazy val `pandora-core` = (project in file("pandora-core"))
+  .settings(
+    name := "pandora-core",
+    libraryDependencies ++= Dependencies.test
+  )
+  .enablePlugins(BuildInfoPlugin)
+  .settings(
+    buildInfoKeys := Seq[BuildInfoKey](
+      BuildInfoKey.map(name) { case (k, _) => k -> "pandora" },
+      version,
+      scalaVersion,
+      sbtVersion,
+      BuildInfoKey.action("gitBranchName") {
+        Utils.gitBranchName()
+      },
+      BuildInfoKey.action("gitCommitHash") {
+        Utils.gitCommitHash()
+      }
+    ),
+    buildInfoOptions += BuildInfoOption.BuildTime,
+    buildInfoPackage := "pandora.core.generated"
+  )
+
 lazy val `pandora-lib` = (project in file("pandora-lib"))
+  .dependsOn(`pandora-core`)
   .settings(
     name := "pandora-lib",
     libraryDependencies ++= Dependencies.test ++
@@ -38,23 +67,4 @@ lazy val `pandora-sandbox` = (project in file("pandora-sandbox"))
       Dependencies.akka ++
       Dependencies.logging ++
       Dependencies.monitor
-  )
-  .enablePlugins(BuildInfoPlugin)
-  .settings(
-    buildInfoKeys := Seq[BuildInfoKey](
-      name,
-      version,
-      scalaVersion,
-      sbtVersion,
-      BuildInfoKey.action("gitBranchName") {
-        Utils.gitBranchName()
-      },
-      BuildInfoKey.action("gitCommitHash") {
-        Utils.gitCommitHash()
-      },
-      BuildInfoKey.action("buildTime") {
-        System.currentTimeMillis
-      }
-    ),
-    buildInfoPackage := "pandora.sandbox.generated"
   )

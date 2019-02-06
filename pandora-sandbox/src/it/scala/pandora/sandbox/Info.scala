@@ -1,6 +1,6 @@
 package pandora.sandbox
 
-import pandora.sandbox.generated.BuildInfo
+import pandora.core.generated.BuildInfo
 
 
 object Info extends App {
@@ -11,6 +11,6 @@ object Info extends App {
   println(s"> scala version: ${BuildInfo.scalaVersion}")
   println(s"> git branch name: ${BuildInfo.gitBranchName}")
   println(s"> git commit hash: ${BuildInfo.gitCommitHash}")
-  println(s"> build time: ${BuildInfo.buildTime}")
+  println(s"> build time: ${BuildInfo.builtAtMillis}")
 
 }
