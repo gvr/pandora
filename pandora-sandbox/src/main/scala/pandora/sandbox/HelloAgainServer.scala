@@ -75,6 +75,6 @@ object HelloAgainServer extends App with SprayJsonSupport {
   }
 
   private val system: ServerSystem = ServerSystem()
-  system.http("hello", "0.0.0.0", 8080).forRoute(route)
+  system.http("hello", host, port).forRoute(route)
 
 }

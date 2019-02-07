@@ -73,8 +73,6 @@ object HelloServer extends App with SprayJsonSupport {
 
   val bindingFuture = Http().bindAndHandle(route, host, port)
 
-  println(s"Server online at http://$host:$port...")
-
   sys.addShutdownHook {
     bindingFuture
       .flatMap(_.unbind())

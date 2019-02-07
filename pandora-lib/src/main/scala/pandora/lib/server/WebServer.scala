@@ -13,7 +13,7 @@ class WebServer private[WebServer](name: String, ref: ActorRef, log: LoggingAdap
 
 }
 
-private [server] object WebServer {
+private[server] object WebServer {
 
   def apply(name: String, host: String, port: Int)(implicit system: ActorSystem): Factory =
     new Factory(name, host, port, system)

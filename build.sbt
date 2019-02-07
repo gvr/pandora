@@ -20,6 +20,7 @@ inThisBuild(
 )
 
 lazy val root = (project in file("."))
+  .aggregate(`pandora-core`, `pandora-lib`, `pandora-sandbox`)
   .settings(
     name := "pandora"
   )

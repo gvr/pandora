@@ -2,19 +2,14 @@ package pandora.lib.server
 
 import akka.actor.ActorSystem
 import akka.event.LoggingAdapter
-import akka.stream.ActorMaterializer
 
 import scala.concurrent.duration._
-import scala.concurrent.{Await, ExecutionContext, TimeoutException}
+import scala.concurrent.{Await, TimeoutException}
 import scala.language.postfixOps
 
 class ServerSystem(systemName: String) {
 
   private implicit val system: ActorSystem = ActorSystem(systemName)
-
-  private implicit val materializer: ActorMaterializer = ActorMaterializer()
-
-  private implicit val executionContext: ExecutionContext = system.dispatcher
 
   private lazy val log: LoggingAdapter = system.log
 
