@@ -28,7 +28,7 @@ lazy val root = (project in file("."))
 lazy val `pandora-core` = (project in file("pandora-core"))
   .settings(
     name := "pandora-core",
-    libraryDependencies ++= Dependencies.test
+    libraryDependencies ++= Dependencies.core
   )
   .enablePlugins(BuildInfoPlugin)
   .settings(
@@ -52,10 +52,7 @@ lazy val `pandora-lib` = (project in file("pandora-lib"))
   .dependsOn(`pandora-core`)
   .settings(
     name := "pandora-lib",
-    libraryDependencies ++= Dependencies.test ++
-      Dependencies.akka ++
-      Dependencies.logging ++
-      Dependencies.monitor
+    libraryDependencies ++= Dependencies.lib
   )
 
 lazy val `pandora-sandbox` = (project in file("pandora-sandbox"))
@@ -64,8 +61,5 @@ lazy val `pandora-sandbox` = (project in file("pandora-sandbox"))
   .settings(Defaults.itSettings)
   .settings(
     name := "pandora-sandbox",
-    libraryDependencies ++= Dependencies.test ++
-      Dependencies.akka ++
-      Dependencies.logging ++
-      Dependencies.monitor
+    libraryDependencies ++= Dependencies.sandbox
   )
