@@ -15,7 +15,8 @@ inThisBuild(
       "-Ywarn-numeric-widen",
       "-Ywarn-value-discard",
       "-Ywarn-unused"
-    )
+    ),
+    wartremoverWarnings ++= Warts.unsafe
   )
 )
 

@@ -13,18 +13,20 @@ import javax.net.ssl._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-private[server] class WebServerActor private[server](name: String,
-                                                     host: String,
-                                                     port: Int,
-                                                     route: Route,
-                                                     connectionContext: ConnectionContext)
-  extends Actor with ActorLogging {
+private[server] class WebServerActor private[server] (name: String,
+                                                      host: String,
+                                                      port: Int,
+                                                      route: Route,
+                                                      connectionContext: ConnectionContext)
+    extends Actor
+    with ActorLogging {
 
   implicit val materializer: ActorMaterializer = ActorMaterializer()
 
   implicit val executionContext: ExecutionContext = context.dispatcher
 
-  private def bindAndHandle: Future[Http.ServerBinding] = Http(context.system).bindAndHandle(route, host, port, connectionContext)
+  private def bindAndHandle: Future[Http.ServerBinding] =
+    Http(context.system).bindAndHandle(route, host, port, connectionContext)
 
   private var bindingFuture: Option[Future[Http.ServerBinding]] = None
 
@@ -37,12 +39,13 @@ private[server] class WebServerActor private[server](name: String,
 
   override def receive: Receive = {
     case Http.ServerBinding(address) => handleServerBinding(address)
-    case Status.Failure(cause) => handleBindFailure(cause)
+    case Status.Failure(cause)       => handleBindFailure(cause)
   }
 
   private def serving: Receive = {
     case WebServerActor.StopServer => stopServer()
-    case msg => log.warning("Server '{}' received unexpected message: {}", name, msg)
+    case msg =>
+      log.warning("Server '{}' received unexpected message: {}", name, msg)
   }
 
   private def handleServerBinding(address: InetSocketAddress): Unit = {
@@ -65,7 +68,6 @@ private[server] class WebServerActor private[server](name: String,
     super.postStop()
   }
 
-
 }
 
 private[server] object WebServerActor {
@@ -75,8 +77,13 @@ private[server] object WebServerActor {
     Props(new WebServerActor(name: String, host, port, route, context))
   }
 
-  def props(name: String, host: String, port: Int, route: Route,
-            keyStorePassword: String, keyStoreFileName: String, keyStoreType: String): Props = {
+  def props(name: String,
+            host: String,
+            port: Int,
+            route: Route,
+            keyStorePassword: String,
+            keyStoreFileName: String,
+            keyStoreType: String): Props = {
     val context = connectionContext(keyStorePassword, keyStoreFileName, keyStoreType)
     Props(new WebServerActor(name: String, host, port, route, context))
   }
@@ -85,7 +92,9 @@ private[server] object WebServerActor {
 
   private val webSecurityProtocol = "TLS"
 
-  private def connectionContext(keyStorePassword: String, keyStoreFileName: String, keyStoreType: String): HttpsConnectionContext = {
+  private def connectionContext(keyStorePassword: String,
+                                keyStoreFileName: String,
+                                keyStoreType: String): HttpsConnectionContext = {
     val password: Array[Char] = keyStorePassword.toArray
 
     val keyStore: KeyStore = {

@@ -22,12 +22,12 @@ object Metrics {
   lazy val waitCounter: Counter = counter("wait")
 
   // timers
-  private def timer(endpoint: String): Timer = Timer
-    .builder("pandora.sandbox.responses")
-    .tags("endpoint", endpoint)
-    .publishPercentileHistogram()
-    .register(registry)
-
+  private def timer(endpoint: String): Timer =
+    Timer
+      .builder("pandora.sandbox.responses")
+      .tags("endpoint", endpoint)
+      .publishPercentileHistogram()
+      .register(registry)
 
   lazy val helloTimer = new BlockTimer("hello")
 

@@ -20,10 +20,9 @@ class ServerSystem(systemName: String) {
     try {
       Await.result(system.terminate(), 2 seconds)
       log.info("Server '{}' exited normally", systemName)
-    }
-    catch {
+    } catch {
       case _: TimeoutException => log.warning("Server '{}' exited without timely shutdown", systemName)
-      case t: Throwable => log.warning("Server '{}' exited with unexpected exception: {}", systemName, t.getMessage)
+      case t: Throwable        => log.warning("Server '{}' exited with unexpected exception: {}", systemName, t.getMessage)
     }
   }
 

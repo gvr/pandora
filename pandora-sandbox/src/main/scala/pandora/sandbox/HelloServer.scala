@@ -61,14 +61,14 @@ object HelloServer extends App with SprayJsonSupport {
       Metrics.helloCounter.increment()
       complete(response(name).toJson)
     } ~
-    path("version") {
-      Metrics.versionCounter.increment()
-      complete(Response.version)
-    } ~
-    path("metrics") {
-      Metrics.metricsCounter.increment()
-      complete(Metrics.scrape())
-    }
+      path("version") {
+        Metrics.versionCounter.increment()
+        complete(Response.version)
+      } ~
+      path("metrics") {
+        Metrics.metricsCounter.increment()
+        complete(Metrics.scrape())
+      }
   }
 
   val bindingFuture = Http().bindAndHandle(route, host, port)
